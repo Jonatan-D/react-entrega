@@ -1,25 +1,29 @@
-import ListGroup from "react-bootstrap/ListGroup";
+import {useEffect, useState} from "react";
+import {pedirDatos} from "../../helpers/pedirDatos";
+import {ItemList} from "../ItemList/ItemList";
+import {Loading} from "../Loading/loading";
 
-export const ItemListContainer = ({greeting}) => {
+export const ItemListContainer = () => {
+	const [productos, setProductos] = useState([]);
+
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		pedirDatos()
+			.then((response) => {
+				setProductos(response);
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
+
 	return (
-		<div className="contenedor m-5">
-			<h3>{greeting}</h3>
-
-			<ListGroup>
-				<ListGroup.Item action variant="secondary">
-					Microprocesadores
-				</ListGroup.Item>
-				<ListGroup.Item action variant="secondary">
-					RAM
-				</ListGroup.Item>
-				<ListGroup.Item action variant="secondary">
-					MICE
-				</ListGroup.Item>
-				<ListGroup.Item action variant="secondary">
-					Teclados Mecánicos
-				</ListGroup.Item>
-			</ListGroup>
-			<hr />
+		<div className="container d-flex justify-content-center">
+			{loading ? <Loading /> : <ItemList items={productos} />}
 		</div>
 	);
 };
