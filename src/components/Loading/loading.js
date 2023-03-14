@@ -1,4 +1,6 @@
 import loadingBike from "./loading.gif";
+
+//Componente que muestra una animación y la leyenda de carga
 export const Loading = () => {
 	return (
 		<div className="w-25 overflow-hidden text-center">

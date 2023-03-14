@@ -2,7 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {NavBar} from "./components/NavBar/NavBar";
 import {ItemListContainer} from "./components/ItemListContainer/ItemListContainer";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import {ItemDetailContainder} from "./components/ItemDetailContainer/ItemDetailContainer";
 
 function App() {
 	return (
@@ -10,11 +11,11 @@ function App() {
 			<NavBar />
 			<Routes>
 				<Route path="/" element={<ItemListContainer greeting="" />} />
-			</Routes>
+				<Route path="/productos/:categoryId" element={<ItemListContainer />} />
+				<Route path="/detalle/:itemId" element={<ItemDetailContainder />} />
 
-			<div className="App">
-				<header className="App-header"></header>
-			</div>
+				{<Route path="*" element={<Navigate to="/" />} />}
+			</Routes>
 		</BrowserRouter>
 	);
 }

@@ -1,5 +1,6 @@
 import {Item} from "../Item/Item";
 
+//Itemlist retorna el contenedor de las tarjetas
 export const ItemList = ({items}) => {
 	return (
 		<div className="container text-center">
