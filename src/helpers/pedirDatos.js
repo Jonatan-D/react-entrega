@@ -5,7 +5,7 @@ export const pedirDatos = () => {
 		//cuerpo de la promesa
 		setTimeout(() => {
 			resolve(MOCK_DATA);
-		}, 3000);
+		}, 1000);
 	});
 };
 //Pedir producto a MOCK_DATA pero filtrado por id

@@ -14,6 +14,28 @@ export const Dolar = () => {
 			});
 	}, []);
 
+	//formateando fecha recibida desde la API
+	const fechaApi = dolarBlue.fechaActualizacion;
+	const fecha = new Date(fechaApi);
+
+	const opcionesFecha = {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		timeZone: "America/Argentina/Buenos_Aires",
+	};
+
+	const opcionesHora = {
+		hour: "numeric",
+		minute: "numeric",
+		timeZone: "America/Argentina/Buenos_Aires",
+	};
+
+	const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
+	const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
+
+	console.log(fechaApi);
+
 	return (
 		<div>
 			{["bottom"].map((placement) => (
@@ -30,9 +52,14 @@ export const Dolar = () => {
 								{dolarBlue && (
 									<div>
 										<p>
-											<strong>Fecha:</strong>
-											{/*Despues corregir largo de fecha*/}
-											{dolarBlue.fechaActualizacion}
+											<strong>Fecha: </strong>
+
+											{fechaFormateada}
+										</p>
+										<p>
+											<strong>Hora: </strong>
+
+											{horaFormateada}
 										</p>
 										<p>
 											<strong>Dolar: </strong>

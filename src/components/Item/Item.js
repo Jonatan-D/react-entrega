@@ -15,7 +15,7 @@ export const Item = ({item}) => {
 				<Card.Text>
 					<b>Categoria:</b> {item.category}
 				</Card.Text>
-				<h6>PRECIO: ${item.price}</h6>
+				<h6>PRECIO: USD {item.price}</h6>
 				<Button as={Link} to={`detalle/${item.id}`} variant="primary">
 					Detalle
 				</Button>
