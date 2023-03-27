@@ -5,13 +5,14 @@ import {useContext} from "react";
 import {CartContext} from "../../Context/CartContext";
 
 export const CartWidget = () => {
-	const {cantProductosCarrito} = useContext(CartContext);
+	const {cantProductosCarrito, cart} = useContext(CartContext);
+	console.log(cantProductosCarrito);
 	return (
 		<div className="cartwidget__container text-center me-4">
-			<Link to="/cart">
+			<Link to="/cart" className="cartwidget__container">
 				<MdShoppingCart className="cartwidget--container__cart" />
+				{cart.length > 0 && <div className="container__cantidad">{cantProductosCarrito()}</div>}
 			</Link>
-			<span className="container__cantidad">{cantProductosCarrito()}</span>
 		</div>
 	);
 };

@@ -34,8 +34,6 @@ export const Dolar = () => {
 	const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
 	const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
 
-	console.log(fechaApi);
-
 	return (
 		<div>
 			{["bottom"].map((placement) => (

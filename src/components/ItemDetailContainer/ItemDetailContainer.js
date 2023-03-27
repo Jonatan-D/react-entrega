@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
-import {pedirProductoPorId} from "../../helpers/pedirDatos";
 import {useParams} from "react-router-dom";
 import {Loading} from "../Loading/loading";
 import {ItemDetail} from "../ItemDetail/ItemDetail";
+import {db} from "../../firebase/config";
+import {doc, getDoc} from "firebase/firestore";
 
 export const ItemDetailContainder = () => {
 	const [item, setItem] = useState(null);
@@ -12,13 +13,25 @@ export const ItemDetailContainder = () => {
 	useEffect(() => {
 		setLoading(true);
 
-		pedirProductoPorId(Number(itemId))
-			.then((resp) => {
-				setItem(resp);
+		//1 armamos la referencia(sincrónica)
+
+		const referenciaDoc = doc(db, "productos", itemId);
+		//2 hacemos el llamado (ASINCRÓNICA)
+
+		getDoc(referenciaDoc)
+			.then((documento) => {
+				setItem({
+					...documento.data(),
+					id: documento.id,
+				});
 			})
 			.finally(() => {
 				setLoading(false);
 			});
 	}, []);
-	return <div>{loading ? <Loading /> : <ItemDetail item={item} />} </div>;
+	return (
+		<div className="container d-flex justify-content-center">
+			{loading ? <Loading /> : <ItemDetail item={item} />}{" "}
+		</div>
+	);
 };

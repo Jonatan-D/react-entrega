@@ -2,15 +2,18 @@ import {BsFillTrash3Fill} from "react-icons/bs";
 import {useContext} from "react";
 import {CartContext} from "../../Context/CartContext";
 import "./Cart.scss";
+import {Link} from "react-router-dom";
+import {Separador} from "../Separador/Separador";
+import {Button} from "react-bootstrap";
 
 export const Cart = () => {
 	const {cart, totalCompra, vaciarCarrito, quitarDelCarrito} = useContext(CartContext);
 	console.log(cart);
 	return (
 		<div className="container my-5">
-			<h2>Tu compra</h2>
-			<hr />
-
+			<h2>Tu compra ({cart.length})</h2>
+			<h6>Total: USD {totalCompra().toFixed(2)}</h6>
+			<Separador />
 			{cart.map((prod) => (
 				<div className="compra text-right" key={prod.id}>
 					<h4>{prod.name}</h4>
@@ -23,16 +26,28 @@ export const Cart = () => {
 						<BsFillTrash3Fill />
 					</button>
 
-					<hr />
+					<Separador />
 				</div>
 			))}
 
-			<h3>Total de la compra: USD {totalCompra().toFixed(2)}</h3>
-
 			{cart.length != 0 && (
-				<button onClick={vaciarCarrito} className="btn btn-warning">
-					Vaciar carrito
-				</button>
+				<div>
+					<button onClick={vaciarCarrito} className="btn btn-warning">
+						Vaciar carrito
+					</button>
+				</div>
+			)}
+			{cart.length == 0 ? (
+				<div>
+					<h4 className="">Tu carrito está vacío</h4>
+					<Button as={Link} to={"/"} variant="primary">
+						Elegir productos
+					</Button>
+				</div>
+			) : (
+				<Button as={Link} to={"/checkout"} variant="success">
+					Terminar de comprar
+				</Button>
 			)}
 		</div>
 	);

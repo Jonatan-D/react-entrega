@@ -6,6 +6,8 @@ import {CartWidget} from "../CartWidget/CartWidget";
 import {Dolar} from "../Dolar/Dolar";
 import {Link} from "react-router-dom";
 import "./NavBar.scss";
+import {useContext} from "react";
+import {LoginContext} from "../../Context/LoginContext";
 
 //Navbar con Bootstrap y a su vez, combinado con Route as={Link}
 export function NavBar() {

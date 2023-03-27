@@ -1,14 +1,29 @@
 .cartwidget__container {
+	margin-right: 5rem;
+
+	position: relative;
 	.cartwidget--container__cart {
-		font-size: 30px;
+		padding-left: 0.4rem;
+		position: absolute;
+		font-size: 45px;
 		color: white;
 		text-align: center;
+		&:hover {
+			color: #ffc107;
+		}
 	}
 	.container__cantidad {
-		font-size: larger;
+		font-size: 0.7rem;
+		font-weight: bolder;
+		max-width: 1.6rem;
+		max-height: 1.4rem;
+		position: absolute;
+		background-color: #ff0707;
 		color: aliceblue;
 		text-align: center;
 		margin-bottom: 0px;
-		font-weight: bold;
+		padding: 0.05rem 0.5rem;
+		border-radius: 20px;
+		border: 2px solid #ffc107;
 	}
 }
