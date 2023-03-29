@@ -1,11 +1,14 @@
 import {useContext, useState} from "react";
 import {Button} from "react-bootstrap";
-import {Navigate} from "react-router-dom";
+import {Navigate, Link} from "react-router-dom";
 import {CartContext} from "../../Context/CartContext";
 import {Separador} from "../Separador/Separador";
+import {db} from "../../firebase/config";
+import {collection, addDoc, doc, updateDoc, getDoc} from "firebase/firestore";
 
 export const Checkout = () => {
-	const {cart, totalCompra} = useContext(CartContext);
+	const {cart, totalCompra, vaciarCarrito} = useContext(CartContext);
+	const [orderId, setOrderId] = useState(null);
 
 	const [values, setValues] = useState({
 		nombre: " ",
@@ -49,8 +52,46 @@ export const Checkout = () => {
 			total: totalCompra(),
 			fecha: new Date(),
 		};
-		console.log("submit", orden);
+
+		const productosRef = collection(db, "productos");
+
+		//por cada item del carrito se arma la referencia al documento
+		cart.forEach((item) => {
+			const docRef = doc(productosRef, item.id);
+
+			getDoc(docRef).then((doc) => {
+				if (doc.data().stock >= item.cantidad) {
+					updateDoc(docRef, {
+						stock: doc.data().stock - item.cantidad,
+					});
+				} else {
+					alert("no hay stock de " + item.name);
+				}
+			});
+		});
+
+		const orderRef = collection(db, "orders");
+
+		// addDoc(orderRef, orden).then((doc) => {
+		// 	setOrderId(doc.id);
+		// 	vaciarCarrito();
+		// });
 	};
+
+	//condidcion para renderizar numero de orden una vez que concreta la compra
+
+	if (orderId) {
+		return (
+			<div className="container my-5">
+				<h2> Tu orden se registro correctamente</h2>
+				<Separador />
+				<p>Tu numero de orden es: {orderId}</p>
+				<Button as={Link} to="/" variant="primary">
+					Seguir comprando
+				</Button>
+			</div>
+		);
+	}
 
 	//condicion para no renderizar el checkout si el carrito esta vacio
 

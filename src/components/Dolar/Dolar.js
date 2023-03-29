@@ -43,7 +43,8 @@ export const Dolar = () => {
 					placement={placement}
 					overlay={
 						<Popover id={`popover-positioned-${placement}`}>
-							<Popover.Header as="h3">Valores actualizados</Popover.Header>
+							<Popover.Header as="h3">Fuente: DolarSi</Popover.Header>
+
 							<Popover.Body>
 								{/*Expresion para que no se renderize antes de tener datos y de error "undefined" a dolarBlue.nombre, etc
 								 */}
