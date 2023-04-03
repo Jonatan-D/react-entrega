@@ -87,9 +87,12 @@ export const Checkout = () => {
 	if (orderId) {
 		return (
 			<div className="container my-5">
-				<h2> Tu orden se registro correctamente</h2>
+				<h2> Tu orden se registró correctamente</h2>
 				<Separador />
-				<p>Tu numero de orden es: {orderId}</p>
+				<p>
+					Tu orden se registró con el siguiente código:{" "}
+					<b className="alert alert-success">{orderId}</b>{" "}
+				</p>
 				<Button as={Link} to="/" variant="primary">
 					Seguir comprando
 				</Button>
