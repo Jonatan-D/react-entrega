@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 
-//Componente PopUp que conecta a una API  externa para mostrar la cotizacion del Dolar actualizado. Fuente:DolarSi
+//Componente PopUp que conecta a una API  externa para mostrar la cotización del Dolar actualizado. Fuente:DolarSi
 export const Dolar = () => {
 	const [dolarBlue, setDolarBlue] = useState(false);
 	useEffect(() => {

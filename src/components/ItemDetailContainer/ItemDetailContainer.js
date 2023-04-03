@@ -29,6 +29,7 @@ export const ItemDetailContainder = () => {
 				setLoading(false);
 			});
 	}, []);
+	// muestra el componente Loading mientras recupera datos del ItemDetail
 	return (
 		<div className="container d-flex justify-content-center">
 			{loading ? <Loading /> : <ItemDetail item={item} />}{" "}

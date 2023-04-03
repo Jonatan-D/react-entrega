@@ -1,46 +1,31 @@
-import {useContext, useState} from "react";
+import {useContext, useState, useEffect} from "react";
 import {Button} from "react-bootstrap";
 import {Navigate, Link} from "react-router-dom";
 import {CartContext} from "../../Context/CartContext";
 import {Separador} from "../Separador/Separador";
 import {db} from "../../firebase/config";
-import {collection, addDoc, doc, updateDoc, getDoc} from "firebase/firestore";
+import {Formik} from "formik";
+import * as Yup from "yup";
+import {documentId, collection, query, where, addDoc, writeBatch, getDocs} from "firebase/firestore";
+
+// validacion del formulario con Yup
+const validacionForm = Yup.object().shape({
+	nombre: Yup.string()
+		.required("Campo obligatorio")
+		.min(3, "Nombre demasiado corto")
+		.max(20, "Maximo 20 caracteres"),
+	direccion: Yup.string()
+		.required("Campo obligatorio")
+		.min(15, "Minimo 15 caracteres")
+		.max(50, "Maximo 50 caracteres"),
+	email: Yup.string().required("Campo obligatorio").email("Email inválido"),
+});
 
 export const Checkout = () => {
 	const {cart, totalCompra, vaciarCarrito} = useContext(CartContext);
 	const [orderId, setOrderId] = useState(null);
 
-	const [values, setValues] = useState({
-		nombre: " ",
-		direccion: " ",
-		email: " ",
-	});
-
-	const handleInputChange = (e) => {
-		setValues({
-			...values,
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		//validar si o si despues ver y mejorar
-
-		if (values.nombre.length < 3) {
-			alert("nombre invalidod");
-			return;
-		}
-		if (values.direccion.length < 3) {
-			alert("dirección inválida");
-			return;
-		}
-		if (values.email.length < 3) {
-			alert("Email inválido");
-			return;
-		}
-
+	const generarOrden = async (values) => {
 		const orden = {
 			cliente: values,
 			items: cart.map((prod) => ({
@@ -53,32 +38,51 @@ export const Checkout = () => {
 			fecha: new Date(),
 		};
 
-		const productosRef = collection(db, "productos");
-
-		//por cada item del carrito se arma la referencia al documento
-		cart.forEach((item) => {
-			const docRef = doc(productosRef, item.id);
-
-			getDoc(docRef).then((doc) => {
-				if (doc.data().stock >= item.cantidad) {
-					updateDoc(docRef, {
-						stock: doc.data().stock - item.cantidad,
-					});
-				} else {
-					alert("no hay stock de " + item.name);
-				}
-			});
-		});
+		const batch = writeBatch(db);
 
 		const orderRef = collection(db, "orders");
+		const productosRef = collection(db, "productos");
 
-		// addDoc(orderRef, orden).then((doc) => {
-		// 	setOrderId(doc.id);
-		// 	vaciarCarrito();
-		// });
+		const fueraDeStock = [];
+
+		const referenciaItem = query(
+			productosRef,
+			where(
+				documentId(),
+				"in",
+				cart.map((prod) => prod.id)
+			)
+		);
+
+		const response = await getDocs(referenciaItem);
+
+		getDocs(referenciaItem);
+
+		response.docs.forEach((doc) => {
+			const item = cart.find((prod) => prod.id === doc.id);
+
+			if (doc.data().stock >= item.cantidad) {
+				batch.update(doc.ref, {
+					stock: doc.data().stock - item.cantidad,
+				});
+			} else {
+				fueraDeStock.push(item);
+			}
+		});
+
+		if (fueraDeStock.length === 0) {
+			await batch.commit();
+		} else {
+			alert("hay items sin stock");
+		}
+
+		addDoc(orderRef, orden).then((doc) => {
+			setOrderId(doc.id);
+			vaciarCarrito();
+		});
 	};
 
-	//condidcion para renderizar numero de orden una vez que concreta la compra
+	// condicion que muestra que se registro la orden
 
 	if (orderId) {
 		return (
@@ -104,36 +108,50 @@ export const Checkout = () => {
 			<h2> Checkout</h2>
 			<Separador />
 
-			<form onSubmit={handleSubmit}>
-				<input
-					onChange={handleInputChange}
-					value={values.nombre}
-					type={"text"}
-					placeholder="Nombre"
-					className="form-control my-3"
-					name="nombre"
-				/>
-				<input
-					onChange={handleInputChange}
-					value={values.direccion}
-					type={"text"}
-					placeholder="Dirección"
-					className="form-control my-3"
-					name="direccion"
-				/>
-				<input
-					onChange={handleInputChange}
-					value={values.email}
-					type={"email"}
-					placeholder="Email"
-					className="form-control my-3"
-					name="email"
-				/>
+			<Formik
+				initialValues={{
+					nombre: "",
+					direccion: "",
+					email: "",
+				}}
+				validationSchema={validacionForm}
+				onSubmit={generarOrden}>
+				{({values, handleChange, handleSubmit, isSubmitting, errors}) => (
+					<form onSubmit={handleSubmit}>
+						<input
+							onChange={handleChange}
+							value={values.nombre}
+							type={"text"}
+							placeholder="Nombre"
+							className="form-control my-3"
+							name="nombre"
+						/>
+						{errors.nombre && <p className="alert alert-warning">{errors.nombre}</p>}
 
-				<Button variant="primary" type="submit">
-					Enviar
-				</Button>
-			</form>
+						<input
+							onChange={handleChange}
+							value={values.direccion}
+							type={"text"}
+							placeholder="Dirección"
+							className="form-control my-3"
+							name="direccion"
+						/>
+						{errors.direccion && <p className="alert alert-warning">{errors.direccion}</p>}
+						<input
+							onChange={handleChange}
+							value={values.email}
+							type={"email"}
+							placeholder="Email"
+							className="form-control my-3"
+							name="email"
+						/>
+						{errors.email && <p className="alert alert-warning">{errors.email}</p>}
+						<Button variant="primary" type="submit" disabled={isSubmitting}>
+							Enviar
+						</Button>
+					</form>
+				)}
+			</Formik>
 		</div>
 	);
 };

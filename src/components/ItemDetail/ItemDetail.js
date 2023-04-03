@@ -6,8 +6,6 @@ import {ItemCount} from "../ItemCount/ItemCount";
 export const ItemDetail = ({item}) => {
 	const {agregarAlCarrito, isInCart} = useContext(CartContext);
 
-	console.log(isInCart(item.id));
-
 	const [cantidad, setCantidad] = useState(1);
 
 	const navigate = useNavigate();

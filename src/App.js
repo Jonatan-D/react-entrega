@@ -1,14 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import {LoginProvider} from "./Context/LoginContext";
 import {CartProvider} from "./Context/CartContext";
-import {AppRouter} from "./Routes/AppRouter";
 import {NavBar} from "./components/NavBar/NavBar";
 import {ItemListContainer} from "./components/ItemListContainer/ItemListContainer";
 import {ItemDetailContainder} from "./components/ItemDetailContainer/ItemDetailContainer";
 import {Routes, Route, Navigate, BrowserRouter} from "react-router-dom";
 import {Cart} from "./components/Cart/Cart";
 import {Checkout} from "./components/Chekout/Checkout";
+import {Footer} from "./components/Footer/Footer";
 
 function App() {
 	return (
@@ -23,7 +22,7 @@ function App() {
 					<Route path="/checkout" element={<Checkout />} />
 					{<Route path="*" element={<Navigate to="/" />} />}
 				</Routes>
-				{/* <AppRouter /> */}
+				<Footer />
 			</CartProvider>
 		</BrowserRouter>
 	);

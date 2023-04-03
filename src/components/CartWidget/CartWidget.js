@@ -6,7 +6,6 @@ import {CartContext} from "../../Context/CartContext";
 
 export const CartWidget = () => {
 	const {cantProductosCarrito, cart} = useContext(CartContext);
-	console.log(cantProductosCarrito);
 	return (
 		<div className="cartwidget__container text-center me-4">
 			<Link to="/cart" className="cartwidget__container">

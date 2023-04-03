@@ -34,7 +34,6 @@ export const ItemListContainer = () => {
 					};
 				});
 
-				console.log(docs);
 				setProductos(docs);
 			})
 			.finally(() => {

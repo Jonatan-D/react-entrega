@@ -7,12 +7,45 @@ import {Separador} from "../Separador/Separador";
 import {Button} from "react-bootstrap";
 
 export const Cart = () => {
-	const {cart, totalCompra, vaciarCarrito, quitarDelCarrito} = useContext(CartContext);
-	console.log(cart);
+	const {cart, totalCompra, vaciarCarrito, quitarDelCarrito, cantProductosCarrito} =
+		useContext(CartContext);
 	return (
 		<div className="container my-5">
-			<h2>Tu compra ({cart.length})</h2>
-			<h6>Total: USD {totalCompra().toFixed(2)}</h6>
+			{/* muestra la cantidad de productos que tiene el carrito y el total del mismo */}
+			<div>
+				<h4>Tu compra ({cantProductosCarrito()})</h4>
+				<h6>Total: USD {totalCompra().toFixed(2)}</h6>
+
+				{/*Si el carrito tiene algún producto, se muestra un boton para poder vaciarlo completamente*/}
+
+				{cart.length != 0 && (
+					<div>
+						<button onClick={vaciarCarrito} className="btn btn-warning">
+							Vaciar carrito
+						</button>
+					</div>
+				)}
+
+				{/*si el carrito esta vacio,esta condición lo informa informa y muestra boton para invitar
+				 al cliente a que elija productos, de lo contrario muestra boton para terminar compra */}
+				<div>
+					{cart.length == 0 ? (
+						<div>
+							<h4 className="">Tu carrito está vacío</h4>
+							<Button as={Link} to={"/"} variant="primary">
+								Elegir productos
+							</Button>
+						</div>
+					) : (
+						<div className="my-3">
+							<Button as={Link} to={"/checkout"} variant="success ">
+								Terminar de comprar
+							</Button>
+						</div>
+					)}{" "}
+				</div>
+			</div>
+
 			<Separador />
 			{cart.map((prod) => (
 				<div className="compra text-right" key={prod.id}>
@@ -29,26 +62,6 @@ export const Cart = () => {
 					<Separador />
 				</div>
 			))}
-
-			{cart.length != 0 && (
-				<div>
-					<button onClick={vaciarCarrito} className="btn btn-warning">
-						Vaciar carrito
-					</button>
-				</div>
-			)}
-			{cart.length == 0 ? (
-				<div>
-					<h4 className="">Tu carrito está vacío</h4>
-					<Button as={Link} to={"/"} variant="primary">
-						Elegir productos
-					</Button>
-				</div>
-			) : (
-				<Button as={Link} to={"/checkout"} variant="success">
-					Terminar de comprar
-				</Button>
-			)}
 		</div>
 	);
 };
