@@ -28,6 +28,7 @@ export const ItemDetailContainder = () => {
 			.finally(() => {
 				setLoading(false);
 			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	// muestra el componente Loading mientras recupera datos del ItemDetail
 	return (
