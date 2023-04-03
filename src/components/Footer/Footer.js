@@ -25,33 +25,36 @@ export const Footer = () => {
 									<div class="col-md-3 me-5 m-b-30">
 										<div class="footer-title m-t-5 m-b-20 p-b-8">Enlaces rápidos</div>
 										<div class="footer-links">
-											<a href="#">preguntas frecuentes</a>
-											<a href="#">Ver sucursales</a>
-											<a href="#">Términos y condiciones</a>
-											<a href="#">Políticas de cambio</a>
+											<a href="/#">preguntas frecuentes</a>
+											<a href="/#">Ver sucursales</a>
+											<a href="/#">Términos y condiciones</a>
+											<a href="/#">Políticas de cambio</a>
 										</div>
 									</div>
 									<div class="col-md-3 me-5 m-b-30">
 										<div class="footer-title m-t-5 m-b-20 p-b-8">Contacto</div>
 										<div class="footer-links">
-											<a href="#">Trabaja con nosotros</a>
-											<a href="#">0810-888-1234</a>
-											<a href="#">Email</a>
-											<a href="#">Foro de ayuda</a>
+											<a href="/#">Trabaja con nosotros</a>
+											<a href="/#">0810-888-1234</a>
+											<a href="/#">Email</a>
+											<a href="/#">Foro de ayuda</a>
 										</div>
 
 										<div class="footer-social-links m-t-30">
 											<li>
-												<a href="https://www.facebook.com/" target="_blank">
+												<a href="https://www.facebook.com/" rel="noreferrer" target="_blank">
 													<BsFacebook />
 												</a>
-												<a href="https://twitter.com/" target="_blank">
+												<a href="https://twitter.com/" rel="noreferrer" target="_blank">
 													<BsTwitter />
 												</a>
-												<a href="https://www.youtube.com/" target="_blank">
+												<a href="https://www.youtube.com/" rel="noreferrer" target="_blank">
 													<BsYoutube />
 												</a>
-												<a href="https://api.whatsapp.com/send?phone=+543516823621" target="_blank">
+												<a
+													href="https://api.whatsapp.com/send?phone=+543516823621"
+													rel="noreferrer"
+													target="_blank">
 													<BsInstagram />
 												</a>
 											</li>

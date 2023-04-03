@@ -18,7 +18,7 @@ export const Cart = () => {
 
 				{/*Si el carrito tiene algún producto, se muestra un boton para poder vaciarlo completamente*/}
 
-				{cart.length != 0 && (
+				{cart.length !== 0 && (
 					<div>
 						<button onClick={vaciarCarrito} className="btn btn-warning">
 							Vaciar carrito
@@ -29,7 +29,7 @@ export const Cart = () => {
 				{/*si el carrito esta vacio,esta condición lo informa informa y muestra boton para invitar
 				 al cliente a que elija productos, de lo contrario muestra boton para terminar compra */}
 				<div>
-					{cart.length == 0 ? (
+					{cart.length === 0 ? (
 						<div>
 							<h4 className="">Tu carrito está vacío</h4>
 							<Button as={Link} to={"/"} variant="primary">

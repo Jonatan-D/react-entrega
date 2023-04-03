@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from "react";
+import {useContext, useState} from "react";
 import {Button} from "react-bootstrap";
 import {Navigate, Link} from "react-router-dom";
 import {CartContext} from "../../Context/CartContext";
