@@ -93,6 +93,8 @@ export const Checkout = () => {
 					Tu orden se registró con el siguiente código:{" "}
 					<b className="alert alert-success">{orderId}</b>{" "}
 				</p>
+
+				<p></p>
 				<Button as={Link} to="/" variant="primary">
 					Seguir comprando
 				</Button>

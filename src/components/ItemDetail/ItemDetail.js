@@ -29,10 +29,18 @@ export const ItemDetail = ({item}) => {
 				<h3>{item.name}</h3>
 				<img src={item.img} alt={item.img} className="rounded-5 border border-warning"></img>
 				<p>{item.description}</p>
-				<p>
-					<b>Detalle: </b>
-					{item.detail}
-				</p>
+				<div className="row justify-content-md-center py-3">
+					<div className="col-6 text-center ">
+						<div className="row  rounded-3 border border-warning justify-content-md-center  py-3">
+							<div className="col-12">
+								<p>
+									<b>Detalle: </b>
+									{item.detail}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
 				<p>
 					<b>Precio: USD </b>
 					{item.price}
