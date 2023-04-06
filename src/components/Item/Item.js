@@ -6,7 +6,7 @@ import "./Item.scss";
 //Item retorna una tarjeta con datos obtenidos del Json
 export const Item = ({item}) => {
 	return (
-		<Card className="card col-3 my-3 m-2 text-center" style={{width: "18rem"}}>
+		<Card className="card col-3 my-3 m-2 text-center border-warning" style={{width: "18rem"}}>
 			<Card.Img variant=" rounded" src={item.img} alt={item.img} />
 			<Card.Body>
 				<Card.Title>{item.name}</Card.Title>

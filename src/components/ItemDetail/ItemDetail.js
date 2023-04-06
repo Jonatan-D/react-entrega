@@ -27,7 +27,7 @@ export const ItemDetail = ({item}) => {
 		<div className="container text-center">
 			<div className="container my-5 p-5">
 				<h3>{item.name}</h3>
-				<img src={item.img} alt={item.img}></img>
+				<img src={item.img} alt={item.img} className="rounded-5 border border-warning"></img>
 				<p>{item.description}</p>
 				<p>
 					<b>Detalle: </b>
